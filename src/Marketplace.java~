@@ -1,0 +1,202 @@
+import java.util.*;
+
+public class Marketplace{
+	private Inventory inventory;
+	private Buyer buyer;
+	private Seller seller;
+	private Account account;
+ 
+	public Marketplace(){}
+ 
+	public void startMarket(){
+		System.out.println("Welcome to the Market");
+		Scanner choice = new Scanner(System.in);
+		int userChoice;
+		boolean quitNum = true;
+		//boolean admins = true;
+  
+		do{
+			System.out.println("What would you like to do?(choose the number corresponding with choice");
+			System.out.println("1: Log-in/Register as a buyer");
+			System.out.println("2: Log-in/Register as a seller");
+			System.out.println("3: Quit");
+			
+			userChoice = choice.nextInt();
+   
+			if (userChoice <= 3 && userChoice >= 1){
+				quitNum = false;
+			}
+			else {
+				quitNum = true;
+			}
+		}while(quitNum);
+		
+		if (userChoice == 1){
+			loginBuyer();
+		}
+		else if (userChoice == 2){
+			
+		}
+		choice.close();
+	}
+ 
+	public void loginBuyer(){
+		Scanner scan = new Scanner(System.in);
+		int option;
+		do{
+			System.out.println("Press 1 to register");
+			System.out.println("Press 2 to login");
+			option = scan.nextInt();
+		}
+		while(option != 1 && option != 2);
+		if(option == 1){
+			String newBuyerID;
+			do{
+				System.out.println("BuyerID:");
+				newBuyerID = scan.nextLine();
+			}while (account.existBuyer(newBuyerID));
+			System.out.println("Password:");
+			String newPassword = scan.nextLine();
+			System.out.println("Email Address:");
+			String newEmail = scan.nextLine();
+			account.registerBuyer(newBuyerID, newPassword, newEmail);
+		}
+		else if(option == 2){
+			String logBuyerID;
+			String logPassword;
+			do {
+				System.out.println("BuyerID:");
+				logBuyerID = scan.nextLine();
+				System.out.println("Password:");
+				logPassword = scan.nextLine();
+			}while (account.logInBuyer(logBuyerID, logPassword));
+		} 
+	}
+ 
+	public void startBuyer(){
+		Scanner choiceBuyer = new Scanner(System.in);
+		int userChoice;
+		boolean buyerNum = true;
+		
+		do {
+			System.out.println("What would you like to do?");
+			System.out.println("1: All item within the inventory");
+			System.out.println("2: Search for an Item");
+			System.out.println("3: Buy an Item");
+			System.out.println("4: Update Infomation");
+			userChoice = choiceBuyer.nextInt();
+			
+			if (userChoice <= 4 && userChoice >= 1){
+				buyerNum = false;
+			}
+			else {
+				buyerNum = true;
+			}
+			
+		}while(buyerNum);
+		if (userChoice == 1){
+				inventory.getAllItem();
+				startBuyer();
+		}
+		else if (userChoice == 2){
+			searchOption();
+			startBuyer();
+		}
+		else if (userChoice == 3){
+			buyOption();
+			startBuyer();
+		}
+		else if (userChoice == 4){
+			updateBuyerInfo();
+			startBuyer();
+		}
+		else{
+			startBuyer();
+		}
+	}
+ 
+	public void searchOption(){
+		Scanner optionChoice = new Scanner(System.in);
+		int option;
+		do {
+			System.out.println("how would you like to search for an Item?");
+			System.out.println("1: By name");
+			System.out.println("2: By item ID");
+			option = optionChoice.nextInt();
+		}while(option != 1 && option != 2);
+		
+		if (option == 1){
+			String itemName = optionChoice.nextLine();
+			buyer.searchForItemByName(itemName);
+		}
+	 	else if (option == 2){
+	 		int itemID = optionChoice.nextInt();
+	 		buyer.searchForItemByItemID(itemID);
+	 	}
+		optionChoice.close();
+	}
+ 
+	public Item buyOption(){
+		Scanner buyChoice = new Scanner(System.in);
+		int tobuy;
+		inventory.getAllItem();
+		do {
+			System.out.println("What is the item you would like to buy?");
+			System.out.println("1: Find by name");
+			System.out.println("2: Find by item ID");
+			tobuy = buyChoice.nextInt();
+		}while(tobuy != 1 && tobuy != 2);
+		
+		if (tobuy == 1){
+			String itemName = buyChoice.nextLine();
+			return buyer.buyItem(itemName);
+		}
+		else if (tobuy == 2){
+			int itemID = buyChoice.nextInt();
+			return buyer.buyItem(itemID);
+		}
+		else {
+			return null;
+		}
+	}
+ 
+	public void updateBuyerInfo(){
+		Scanner information = new Scanner(System.in);
+		int option;
+		do {
+			System.out.println("What would you like to update?");
+			System.out.println("1: password");
+			System.out.println("2: email");
+			option = information.nextInt();
+		}while(option != 1 && option != 2);
+		
+		if (option == 1){
+			System.out.println("What is the new password?");
+			buyer.setPassword(information.nextLine());
+		}
+		else if (option == 2){
+			System.out.println("What is the new email?");
+			buyer.setEmail(information.nextLine());
+		}
+		information.close();
+	}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ public void sortMarket(){}
+ 
+ public void readyToShip(){}
+ 
+ public void checkAttributes(){}
+ 
+ public static void main(String[] args){
+  Marketplace test = new Marketplace();
+  //test.startMarket();
+ }
+}
+  
